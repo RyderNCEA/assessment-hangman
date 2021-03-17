@@ -8,3 +8,11 @@ def get_dictionary():
         for line in lines:
             dictionary.append(line.replace("\n", ""))
         return dictionary
+    
+# Get a word from word list based on its length
+def get_word(word_length):
+    dictionary = get_dictionary()
+    word = random.choice(dictionary)
+    while len(word) != word_length:
+        word = random.choice(dictionary)
+    return word

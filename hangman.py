@@ -36,7 +36,12 @@ def guess(user_guess, solved, word):
     word = word.upper()
     for letter in word:
         if user_guess == letter:
+            # Gather all occurences of letter
+            occurences = [i for i in range(len(word)) if word.find(user_guess, i) == i]
+            # Add each occurence to what the user has solved so far
+            for occurence in occurences:
+                solved[occurence] = user_guess
             print("You guessed '{}' and it was {}correct{}!".format(user_guess, CGREEN, CEND))
-            return solved
+            return [solved, True]
     print("You guessed '{}' and it was {}incorrect{}!".format(user_guess, CRED, CEND))
-    return solved
+    return [solved, False]

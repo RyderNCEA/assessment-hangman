@@ -29,3 +29,14 @@ def get_graphic(value):
             if position in lines_to_read:
                 graphic.append(line.replace("\n",""))
         return graphic
+
+# Check the users guess if it has any occurences in the word 
+def guess(user_guess, solved, word):
+    user_guess = user_guess.upper()
+    word = word.upper()
+    for letter in word:
+        if user_guess == letter:
+            print("You guessed '{}' and it was {}correct{}!".format(user_guess, CGREEN, CEND))
+            return solved
+    print("You guessed '{}' and it was {}incorrect{}!".format(user_guess, CRED, CEND))
+    return solved

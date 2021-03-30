@@ -21,6 +21,16 @@ TITLE = """
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+# Keep asking user question until answer is valid
+def askUser(question, valid_inputs):
+    response = input(question)
+    while True:
+        for correct in valid_inputs:
+            if response == correct:
+                return response
+            else:
+                continue    
+    
 # Load list of words from word_list.txt file
 def get_dictionary():
     with open("word_list.txt", "r") as words:

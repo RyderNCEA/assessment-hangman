@@ -23,8 +23,8 @@ def clear():
 
 # Keep asking user question until answer is valid
 def askUser(question, valid_inputs):
-    response = input(question)
     while True:
+        response = input(question)
         for correct in valid_inputs:
             if response == correct:
                 return response

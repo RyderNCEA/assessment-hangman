@@ -1,6 +1,13 @@
 import random
 import os
 
+# Terminal Colours
+CBLUE = "\033[94m"
+CGREEN = "\033[92m"
+CRED = "\033[91m"
+CEND = "\033[0m"
+
+
 TITLE = """
 --------------------------------------
   _  _                                

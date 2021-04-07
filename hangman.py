@@ -93,3 +93,6 @@ def update_game(word, guesses, attempts):
     print(TITLE)
     for line in graphic:
         print(line)
+        
+# Start the game of Hangman
+def start_game(difficulty):

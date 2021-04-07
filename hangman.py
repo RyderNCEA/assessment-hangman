@@ -73,3 +73,23 @@ def guess(user_guess, solved, word):
             return [solved, True]
     print("You guessed '{}' and it was {}incorrect{}!".format(user_guess, CRED, CEND))
     return [solved, False]
+  
+# Update the game progress
+def update_game(word, guesses, attempts):
+    # Get the Hangman graphic based on remaining attempts
+    graphic = get_graphic(attempts)
+    # Display hidden word in form of "_ _ _ _" and show what is solved
+    graphic[1] += "\t " + " ".join(word)
+    # Display users guesses so far
+    graphic[3] += "\t Your Guesses: "
+    # Divide list of guesses into lines of 5 
+    guesses = [guesses[x:x+GUESSES_PER_LINE] for x in range(0, len(guesses), GUESSES_PER_LINE)]
+    for position in range(0, len(guesses)):
+        if position+3 == 3:
+            graphic[position+3] += ", ".join(guesses)
+        else:
+            graphic[position+3] += "\t " + ", ".join(guesses)
+    # Print full game graphic
+    print(TITLE)
+    for line in graphic:
+        print(line)

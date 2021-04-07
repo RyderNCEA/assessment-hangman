@@ -1,5 +1,6 @@
 import random
 import os
+import time
 
 # Terminal Colours
 CBLUE = "\033[94m"

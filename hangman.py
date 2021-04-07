@@ -86,9 +86,9 @@ def update_game(word, guesses, attempts):
     guesses = [guesses[x:x+GUESSES_PER_LINE] for x in range(0, len(guesses), GUESSES_PER_LINE)]
     for position in range(0, len(guesses)):
         if position+3 == 3:
-            graphic[position+3] += ", ".join(guesses)
+            graphic[position+3] += ", ".join(guesses[position])
         else:
-            graphic[position+3] += "\t " + ", ".join(guesses)
+            graphic[position+3] += "\t " + ", ".join(guesses[position])
     # Print full game graphic
     print(TITLE)
     for line in graphic:

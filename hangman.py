@@ -28,7 +28,6 @@ def askUser(question, valid_inputs):
         response = input(question)
         try:
             response = response.upper()
-            print(response)
         except:
             continue
         for correct in valid_inputs:

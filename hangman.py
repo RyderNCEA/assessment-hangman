@@ -22,14 +22,15 @@ TITLE = """
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-# Keep asking user question until answer is valid ()
+# Keep asking user question until answer is valid
 def askUser(question, valid_inputs):
     while True:
         response = input(question)
         try:
-            response = response.upper()
+            response = int(response)
         except:
-            continue
+            response = response.upper()
+            
         for correct in valid_inputs:
             if response == correct:
                 return response

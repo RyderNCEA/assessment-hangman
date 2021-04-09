@@ -105,3 +105,30 @@ def update_game(word, guesses, attempts):
     print(TITLE)
     for line in graphic:
         print(line)
+        
+# Start the game of Hangman
+def start_game():
+    attempt = 1
+    guesses = []
+    progress = []
+    print(TITLE)
+    user_input = askUser("\nHave you played Hangman before? [Y]es or [N]o: ", ["YES","NO","Y","N"])
+    clear()
+    print(TITLE)
+    print("""
+    How to Play
+    
+    A random word with a specific length is selected.
+    The length of the word will be based on the difficulty 
+    you select or the level you are on if you choose to
+    play the progressive mode where each round of hangman
+    gets progressively harder.
+
+    If you have 6 incorret guesses you lose! With each
+    wrong guess the hangman graphic will move closer to
+    completion.
+
+    If you guess a letter in the word that letter will be
+    uncovered for you to see and help you solve the word.""")
+
+    user_input = askUser("\nPlease pick a difficulty [4 to 11] or [p]rogressive mode: ", ["PROGRESSIVE","P",4,5,6,7,8,9,10,11])

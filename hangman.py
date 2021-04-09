@@ -8,6 +8,7 @@ CGREEN = "\033[92m"
 CRED = "\033[91m"
 CEND = "\033[0m"
 
+LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 TITLE = """
 --------------------------------------
@@ -19,6 +20,10 @@ TITLE = """
 --------------------------------------                     
 """
 
+# How many guesses to show each line
+GUESSES_PER_LINE = 5
+
+# Clear the users terminal
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -37,7 +42,7 @@ def askUser(question, valid_inputs):
             else:
                 continue
         print("Invalid Input: input must be a valid input.")
-    
+
 # Load list of words from word_list.txt file
 def get_dictionary():
     with open("word_list.txt", "r") as words:
@@ -80,7 +85,7 @@ def guess(user_guess, solved, word):
             return [solved, True]
     print("You guessed '{}' and it was {}incorrect{}!".format(user_guess, CRED, CEND))
     return [solved, False]
-  
+
 # Update the game progress
 def update_game(word, guesses, attempts):
     # Get the Hangman graphic based on remaining attempts
@@ -100,6 +105,3 @@ def update_game(word, guesses, attempts):
     print(TITLE)
     for line in graphic:
         print(line)
-        
-# Start the game of Hangman
-def start_game(difficulty):

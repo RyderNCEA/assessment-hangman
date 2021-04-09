@@ -22,15 +22,21 @@ TITLE = """
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-# Keep asking user question until answer is valid
+# Keep asking user question until answer is valid ()
 def askUser(question, valid_inputs):
     while True:
         response = input(question)
+        try:
+            response = response.upper()
+            print(response)
+        except:
+            continue
         for correct in valid_inputs:
             if response == correct:
                 return response
             else:
-                continue    
+                continue
+        print("Invalid Input: input must be a valid input.")
     
 # Load list of words from word_list.txt file
 def get_dictionary():

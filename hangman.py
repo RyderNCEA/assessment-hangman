@@ -130,5 +130,18 @@ def start_game():
 
     If you guess a letter in the word that letter will be
     uncovered for you to see and help you solve the word.""")
+    
+    while True:
+        difficulty = askUser("\nPlease pick a difficulty [4 to 11] or [p]rogressive mode: ", ["PROGRESSIVE","P",4,5,6,7,8,9,10,11], "Invalid Input: input must be a valid input.")
+        progressive = False
+        if difficulty == "PROGRESSIVE" or difficulty == "P":
+            progressive = True
+            difficulty = 4
 
-    user_input = askUser("\nPlease pick a difficulty [4 to 11] or [p]rogressive mode: ", ["PROGRESSIVE","P",4,5,6,7,8,9,10,11])
+        while True:
+            word = get_word(difficulty).upper()
+            attempt = 0
+            guesses = []
+            progress = []
+            letters = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+            for i in range(len(word)): progress.append("_")

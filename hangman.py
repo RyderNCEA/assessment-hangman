@@ -8,8 +8,6 @@ CGREEN = "\033[92m"
 CRED = "\033[91m"
 CEND = "\033[0m"
 
-LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
 TITLE = """
 --------------------------------------
   _  _                                
@@ -28,7 +26,7 @@ def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 # Keep asking user question until answer is valid
-def askUser(question, valid_inputs):
+def askUser(question, valid_inputs, error):
     while True:
         response = input(question)
         try:
@@ -41,7 +39,7 @@ def askUser(question, valid_inputs):
                 return response
             else:
                 continue
-        print("Invalid Input: input must be a valid input.")
+        print(error)
 
 # Load list of words from word_list.txt file
 def get_dictionary():
@@ -105,17 +103,16 @@ def update_game(word, guesses, attempts):
     print(TITLE)
     for line in graphic:
         print(line)
-        
+
 # Start the game of Hangman
 def start_game():
-    attempt = 1
-    guesses = []
-    progress = []
+    word = get_word(2)
     print(TITLE)
-    user_input = askUser("\nHave you played Hangman before? [Y]es or [N]o: ", ["YES","NO","Y","N"])
+    user_input = askUser("\nHave you played Hangman before? [Y]es or [N]o: ", ["YES","NO","Y","N"], "Invalid Input: input must be a valid input.")
     clear()
     print(TITLE)
-    print("""
+    if user_input == "NO" or user_input == "N":
+        print("""
     How to Play
     
     A random word with a specific length is selected.
@@ -130,7 +127,7 @@ def start_game():
 
     If you guess a letter in the word that letter will be
     uncovered for you to see and help you solve the word.""")
-    
+
     while True:
         difficulty = askUser("\nPlease pick a difficulty [4 to 11] or [p]rogressive mode: ", ["PROGRESSIVE","P",4,5,6,7,8,9,10,11], "Invalid Input: input must be a valid input.")
         progressive = False
@@ -145,8 +142,10 @@ def start_game():
             progress = []
             letters = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
             for i in range(len(word)): progress.append("_")
+
             while "".join(progress) != word and attempt != 6:
                 clear()
+ 
                 update_game(progress, guesses, attempt+1)
                 user_input = askUser("\nWhat is your guess? ", letters, "Invalid Input: Please enter a letter you haven't guessed.")
                 letters.remove(user_input)
@@ -156,3 +155,10 @@ def start_game():
                     attempt += 1
                 time.sleep(0.8)
                 continue
+
+            if attempt == 6:
+                clear()
+                update_game(list(word), guesses, 7)
+                print("\nYou Lose! The word was " + word)
+            else:
+                print("\nYou guessed the word! The word was " + word)

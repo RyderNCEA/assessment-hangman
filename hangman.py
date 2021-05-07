@@ -145,3 +145,14 @@ def start_game():
             progress = []
             letters = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
             for i in range(len(word)): progress.append("_")
+            while "".join(progress) != word and attempt != 6:
+                clear()
+                update_game(progress, guesses, attempt+1)
+                user_input = askUser("\nWhat is your guess? ", letters, "Invalid Input: Please enter a letter you haven't guessed.")
+                letters.remove(user_input)
+                guesses.append(user_input)
+                result = guess(user_input, progress, word)
+                if result[1] == False:
+                    attempt += 1
+                time.sleep(0.8)
+                continue

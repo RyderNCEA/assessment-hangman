@@ -162,3 +162,17 @@ def start_game():
                 print("\nYou Lose! The word was " + word)
             else:
                 print("\nYou guessed the word! The word was " + word)
+                
+            user_input = askUser("Do you want to play again? [Y]es or [N]o: ", ["YES","NO","Y","N"], "Invalid Input: input must be a valid input.")
+            if user_input == "NO" or user_input == "N":
+                return print("You have quit the game.")
+            else:
+                if progressive == True:
+                    difficulty += 1
+                    if difficulty == 12:
+                        user_input = askUser("Do you want to play again? [Y]es or [N]o: ", ["YES","NO","Y","N"], "Invalid Input: input must be a valid input.")
+                        if user_input == "NO" or user_input == "N":
+                            return print("You have quit the game.")
+                else:
+                    break
+start_game()

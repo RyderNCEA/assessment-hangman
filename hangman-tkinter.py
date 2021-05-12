@@ -32,6 +32,8 @@ class PageHandler():
             object.place(x=component[1], y=component[2], anchor=component[3], width=component[4], height=component[5])
             self.current.frame.place(x=0,y=0)
 
+WINDOW_DIMENSIONS = ['805','480']
+center_anchor = [int(WINDOW_DIMENSIONS[0])/2 , int(WINDOW_DIMENSIONS[0])/2]
 window = tk.Tk()
 
 window.title("Hangman Game")

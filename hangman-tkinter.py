@@ -27,7 +27,6 @@ class PageHandler():
         # Place all components in desired page
         for component in page.components:
             self.current = page
-            print(component)
             object = component[0]
             object.place(x=component[1], y=component[2], anchor=component[3], width=component[4], height=component[5])
             self.current.frame.place(x=0,y=0)

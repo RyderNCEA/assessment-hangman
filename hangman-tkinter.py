@@ -2,10 +2,6 @@ import tkinter as tk
 from tkinter import *
 import random
 
-import tkinter as tk
-from tkinter import *
-import random
-
 # Page Object
 class Page():
     def __init__(self, window):

@@ -31,6 +31,8 @@ class PageHandler():
             object.place(x=component[1], y=component[2], anchor=component[3], width=component[4], height=component[5])
             self.current.frame.place(x=0,y=0)
 
+WINDOW_DIMENSIONS = ['805','480']
+center_anchor = [int(WINDOW_DIMENSIONS[0])/2 , int(WINDOW_DIMENSIONS[0])/2]
 class Game():
     def __init__(self):
         self.word = []
@@ -46,13 +48,37 @@ class Game():
         self.word = random.choice(dictionary)
         while len(word) != word_length:
             word = random.choice(dictionary)
-            
-WINDOW_DIMENSIONS = ['805','480']
-center_anchor = [int(WINDOW_DIMENSIONS[0])/2 , int(WINDOW_DIMENSIONS[0])/2]
+
+
 window = tk.Tk()
 
 window.title("Hangman Game")
 window.geometry('x'.join(WINDOW_DIMENSIONS))
 window.configure(bg="#F9EBD1")
+
+game = Game()
+home = Page(window)
+help = Page(window)
+
+pagehandler = PageHandler(home)
+frame = pagehandler.getPage()
+
+# Universal Components
+title = Label(frame, fg="#2B2C2C", bg="#F9EBD1", text="Hangman", font=("Arial", 60))
+
+# Home Page Components
+play_button = Button(frame, text="Play", font=("Arial", 20), highlightbackground="#FBBC52", fg="#2B2C2C", highlightthickness=60, width=230, height=50)
+#play_button.configure(command=lambda window=window: pageManager(window, "difficulty"))
+
+help_button = Button(frame, text="How to Play", font=("Arial", 20), highlightbackground="#FBBC52", fg="#2B2C2C", highlightthickness=60)
+help_button.configure(command=lambda window=window: pagehandler.setPage(help))
+
+home.add_component(title, center_anchor[0], 80, "center", None, None)
+home.add_component(help_button, center_anchor[0], 240, "center", 230, 50)
+home.add_component(play_button, center_anchor[0], 170, "center", 230, 50)
+pagehandler.setPage(home)
+
+help.add_component(title, center_anchor[0], 80, "center", None, None)
+
 
 window.mainloop()

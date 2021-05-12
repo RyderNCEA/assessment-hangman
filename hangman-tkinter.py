@@ -32,6 +32,22 @@ class PageHandler():
             object.place(x=component[1], y=component[2], anchor=component[3], width=component[4], height=component[5])
             self.current.frame.place(x=0,y=0)
 
+class Game():
+    def __init__(self):
+        self.word = []
+        self.attempts = 6
+
+    # Get a random word from word list text file based on its length
+    def randomWord(word_length):
+        with open("word_list.txt", "r") as words:
+            dictionary = []
+            lines = words.readlines()
+            for line in lines:
+                dictionary.append(line.replace("\n", ""))
+        self.word = random.choice(dictionary)
+        while len(word) != word_length:
+            word = random.choice(dictionary)
+            
 WINDOW_DIMENSIONS = ['805','480']
 center_anchor = [int(WINDOW_DIMENSIONS[0])/2 , int(WINDOW_DIMENSIONS[0])/2]
 window = tk.Tk()

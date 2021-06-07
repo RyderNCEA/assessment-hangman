@@ -8,6 +8,7 @@ CGREEN = "\033[92m"
 CRED = "\033[91m"
 CEND = "\033[0m"
 
+# Game Title
 TITLE = """
 --------------------------------------
   _  _                                
@@ -161,6 +162,8 @@ def start_game():
                 update_game(list(word), guesses, 7)
                 print("\nYou Lose! The word was " + word)
             else:
+                clear()
+                update_game(list(word), guesses, 7)
                 print("\nYou guessed the word! The word was " + word)
                 
             user_input = askUser("Do you want to play again? [Y]es or [N]o: ", ["YES","NO","Y","N"], "Invalid Input: input must be a valid input.")

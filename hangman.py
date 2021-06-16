@@ -3,12 +3,10 @@ import os
 import time
 
 # Terminal Colours
-CBLUE = "\033[94m"
 CGREEN = "\033[92m"
 CRED = "\033[91m"
 CEND = "\033[0m"
 
-# Game Title
 TITLE = """
 --------------------------------------
   _  _                                
@@ -87,6 +85,7 @@ def guess(user_guess, solved, word):
 
 # Update the game progress
 def update_game(word, guesses, attempts):
+    clear()
     # Get the Hangman graphic based on remaining attempts
     graphic = get_graphic(attempts)
     # Display hidden word in form of "_ _ _ _" and show what is solved
@@ -107,7 +106,6 @@ def update_game(word, guesses, attempts):
 
 # Start the game of Hangman
 def start_game():
-    word = get_word(2)
     print(TITLE)
     user_input = askUser("\nHave you played Hangman before? [Y]es or [N]o: ", ["YES","NO","Y","N"], "Invalid Input: input must be a valid input.")
     clear()
@@ -129,6 +127,7 @@ def start_game():
     If you guess a letter in the word that letter will be
     uncovered for you to see and help you solve the word.""")
 
+    # Selection of difficulty component
     while True:
         difficulty = askUser("\nPlease pick a difficulty [4 to 11] or [p]rogressive mode: ", ["PROGRESSIVE","P",4,5,6,7,8,9,10,11], "Invalid Input: input must be a valid input.")
         progressive = False
@@ -136,6 +135,7 @@ def start_game():
             progressive = True
             difficulty = 4
 
+        # Begin round of game
         while True:
             word = get_word(difficulty).upper()
             attempt = 0
@@ -145,8 +145,6 @@ def start_game():
             for i in range(len(word)): progress.append("_")
 
             while "".join(progress) != word and attempt != 6:
-                clear()
- 
                 update_game(progress, guesses, attempt+1)
                 user_input = askUser("\nWhat is your guess? ", letters, "Invalid Input: Please enter a letter you haven't guessed.")
                 letters.remove(user_input)
@@ -156,17 +154,18 @@ def start_game():
                     attempt += 1
                 time.sleep(0.8)
                 continue
-
+            
+            # Check if user has used up all guesses
             if attempt == 6:
-                clear()
                 update_game(list(word), guesses, 7)
                 print("\nYou Lose! The word was " + word)
-            else:
-                clear()
+            else:  
                 update_game(list(word), guesses, 7)
                 print("\nYou guessed the word! The word was " + word)
-                
-            user_input = askUser("Do you want to play again? [Y]es or [N]o: ", ["YES","NO","Y","N"], "Invalid Input: input must be a valid input.")
+            if progressive == True:
+                user_input = askUser("Do you want to play the next round? [Y]es or [N]o: ", ["YES","NO","Y","N"], "Invalid Input: input must be a valid input.")
+            else:
+                user_input = askUser("Do you want to play again? [Y]es or [N]o: ", ["YES","NO","Y","N"], "Invalid Input: input must be a valid input.")
             if user_input == "NO" or user_input == "N":
                 return print("You have quit the game.")
             else:

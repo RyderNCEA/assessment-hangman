@@ -82,7 +82,6 @@ class Game():
         self.progress = []
         self.attempts = 6
         self.randomWord(difficulty)
-        self.set_difficulty(4)
 
         # End Page
         endpage = Page(window)

@@ -100,6 +100,23 @@ class Game():
             text="Play Again")
         endpage.add_component(play_button, center_anchor[0], 230, "center", 250, 65)
 
+        # Game Page
+        roundpage = Page(window)
+        roundpage_frame = roundpage.frame
+        for i in range(len(self.word)): self.progress.append("_")
+        word_display = Label(roundpage_frame, fg="#2B2C2C", bg="#F9EBD1", text=" ".join(self.progress), font=("Arial", 50))
+        roundpage.add_component(word_display, center_anchor[0], 90, "center")
+        quit_button = Button(roundpage_frame, text="Exit", font=("Arial", 15), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
+        roundpage.add_component(quit_button, 60, 40, "center", 80, 40, command=lambda : pagehandler.setPage(home))
+        xpos = 25
+        ypos = 195
+        for l in letters:
+            letter_button = Button(roundpage_frame, text=l.upper(), font=("Arial", 20), focuscolor='#ffd285', activebackground="#ffd894",bg="#FBBC52", fg="#2B2C2C")
+            roundpage.add_component(letter_button, xpos, ypos, None, width=75, height=75, command=lambda object=letter_button: self.guess(object,self.word,self.progress,word_display, ph, endpage))
+            xpos += 85
+        print(self.word)
+        ph.setPage(roundpage)
+        
 
 # Creation of Game
 window = Tk()

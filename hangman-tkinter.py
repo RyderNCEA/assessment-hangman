@@ -156,5 +156,5 @@ for difficulty_level in range(4,12):
 # Add progressive mode button
 progressive_mode = Button(pageFrames['difficulty'], text="Progressive Mode", font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
 progressive_mode.configure(command=lambda d="Progressive": game.start_round(game.set_difficulty(d), pagehandler, window))
-difficulty.add_component(progressive_mode, center_anchor[0], 220, "center", 190, 55)
+difficulty.add_component(progressive_mode, center_anchor[0], 320, "center", 190, 55)
 window.mainloop()

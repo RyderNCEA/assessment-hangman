@@ -155,7 +155,7 @@ window = Tk()
 window.title("Hangman Game")
 window.geometry('x'.join(WINDOW_DIMENSIONS))
 window.configure(bg=beige)
-game = Game(window)
+game = Game()
 
 # Create Pages for Game
 home = Page(window)

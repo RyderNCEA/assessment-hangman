@@ -66,6 +66,16 @@ class Game():
         self.word = random.choice(dictionary)
         while len(word) != word_length:
             word = random.choice(dictionary)
+            
+    # Set the difficulty of the game 
+    def set_difficulty(self, difficulty):
+        if type(difficulty) == str and "Progressive" == difficulty:
+            self.progressive = True
+            game_difficulty = 4
+        else:
+            game_difficulty = difficulty
+            self.progressive = False
+        return game_difficulty
 
 
 # Creation of Game

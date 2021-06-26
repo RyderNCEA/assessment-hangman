@@ -5,7 +5,7 @@ import random
 
 
 # System Adjustments
-if os.name is "nt":
+if os.name == "nt":
     font_reduction = 0.75
 else:
     font_reduction = 1
@@ -152,7 +152,7 @@ class Game():
         graphic_canvas = Label(roundpage_frame, image=self.graphic, bg=beige)
         roundpage.add_component(graphic_canvas, 140, 30, None, width=120,height=156)
         for i in range(len(self.word)): self.progress.append("_")
-        word_display = Label(roundpage_frame, fg=darkgrey, bg=beige, text=" ".join(self.progress), font=("Arial", 50*font_reduction))
+        word_display = Label(roundpage_frame, fg=darkgrey, bg=beige, text=" ".join(self.progress), font=("Arial", int(50*font_reduction)))
         roundpage.add_component(word_display, center_anchor[0]+100, 90, "center")
         quit_button = Button(roundpage_frame, text="Exit", font=("Arial", 15), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
         roundpage.add_component(quit_button, 60, 40, "center", 80, 40, command=lambda : pagehandler.setPage(home))
@@ -231,21 +231,21 @@ If you guess a letter in the word that letter will be
     uncovered for you to see and help you solve the word.   """)
 help.add_component(howtoplay, center_anchor[0], 280, "center")
 
-quit_button = Button(pageFrames['help'], text="Exit", font=("Arial", 15*font_reduction), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
+quit_button = Button(pageFrames['help'], text="Exit", font=("Arial", int(15*font_reduction)), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
 help.add_component(quit_button, 60, 40, "center", 80, 40, command=lambda : pagehandler.setPage(home))
 
 # Difficulty Page Components
 title = Label(pageFrames['difficulty'], fg=darkgrey, bg=beige, text="Hangman", font=("Arial", int(60*font_reduction)))
 difficulty.add_component(title, center_anchor[0], 90, "center")
 
-subtitle = Label(pageFrames['difficulty'], fg=darkgrey, bg=beige, text="Select your game difficulty:", font=("Arial", 30*font_reduction))
+subtitle = Label(pageFrames['difficulty'], fg=darkgrey, bg=beige, text="Select your game difficulty:", font=("Arial", int(30*font_reduction)))
 difficulty.add_component(subtitle, center_anchor[0], 160, "center")
 
 temp_x = 85
 temp_y = 190
 # Add all dificulty buttons
 for difficulty_level in range(4,12):
-    play_button = Button(pageFrames['difficulty'], text=str(difficulty_level), font=("Arial", int(int(20*font_reduction))), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
+    play_button = Button(pageFrames['difficulty'], text=str(difficulty_level), font=("Arial", int(20*font_reduction)), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
     difficulty.add_component(play_button, temp_x, temp_y, None, 70, 70,command=lambda d=difficulty_level: game.start_round(game.set_difficulty(d), pagehandler, window))
     temp_x += 80
 

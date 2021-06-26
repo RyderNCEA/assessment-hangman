@@ -1,6 +1,5 @@
 from tkinter import *
 from tkmacosx import Button
-from PIL import Image, ImageTk
 import random
 
 # COLOURS

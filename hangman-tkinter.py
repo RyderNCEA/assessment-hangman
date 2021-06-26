@@ -79,9 +79,19 @@ class Game():
     
     # Check the users guess if it is/isnt in the word
     def guess(self, button, word, progress, progresslabel, pagehandler, endpage):
-        guess = button.cget('text')
+        guess = button.get('text')
         word = word.upper()
-    
+        for letter in word:
+            if guess == letter:
+                # Gather all occurences of letter
+                occurences = [i for i in range(len(word)) if word.find(guess, i) == i]
+                # Add each occurence to what the user has solved so far
+                for occurence in occurences:
+                    progress[occurence] = guess
+                # Update the word
+                progresslabel.configure(text=" ".join(progress))
+                button.place_forget()
+        
     # Start round of game
     def start_round(self, difficulty, ph, window):
         self.progress = []

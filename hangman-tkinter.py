@@ -21,8 +21,8 @@ class Page():
         self.frame = Frame(window, width=WINDOW_DIMENSIONS[0], height=WINDOW_DIMENSIONS[1], bg="#F9EBD1")
 
     # Add components to page
-    def add_component(self, object, xpos, ypos, anchor, width, height):
-        self.components.append([object,xpos,ypos, anchor, width, height])
+    def add_component(self, object, xpos, ypos, anchor, width=None, height=None, command=None):
+        self.components.append([object,xpos,ypos, anchor, width, height, command])
         return
 
 # Game Page Manager

@@ -111,6 +111,12 @@ class Game():
         xpos = 25
         ypos = 195
         for l in letters:
+            if l == "j" or l == "s":
+                ypos += 85
+                if l == "s":
+                    xpos = 68
+                else:
+                    xpos = 25
             letter_button = Button(roundpage_frame, text=l.upper(), font=("Arial", 20), focuscolor='#ffd285', activebackground="#ffd894",bg="#FBBC52", fg="#2B2C2C")
             roundpage.add_component(letter_button, xpos, ypos, None, width=75, height=75, command=lambda object=letter_button: self.guess(object,self.word,self.progress,word_display, ph, endpage))
             xpos += 85

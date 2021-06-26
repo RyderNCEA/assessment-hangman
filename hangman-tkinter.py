@@ -76,6 +76,30 @@ class Game():
             game_difficulty = difficulty
             self.progressive = False
         return game_difficulty
+    
+    # Start round of game
+    def start_round(self, difficulty, ph, window):
+        self.progress = []
+        self.attempts = 6
+        self.randomWord(difficulty)
+        self.set_difficulty(4)
+
+        # End Page
+        endpage = Page(window)
+        endpage_frame = endpage.frame
+        title = Label(endpage_frame, fg="#2B2C2C", bg=beige, text="Hangman", font=("Arial", 60))
+        endpage.add_component(title, center_anchor[0], 90, "center")
+        subtitle = Label(endpage_frame, bg=orange, fg="#2B2C2C", text="You {}!", font=("Arial", 40))
+        endpage.add_component(subtitle, center_anchor[0], 160, "center")
+        play_button = Button(endpage_frame, font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
+        if self.progressive == True and difficulty != 11:
+            self.difficulty += 1
+            play_button.configure(command=lambda window=window: self.start_round(self.difficulty, ph, window), 
+            text="Next Round")
+        else:
+            play_button.configure(command=lambda window=window: pagehandler.setPage(home), 
+            text="Play Again")
+        endpage.add_component(play_button, center_anchor[0], 230, "center", 250, 65)
 
 
 # Creation of Game

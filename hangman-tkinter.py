@@ -77,6 +77,11 @@ class Game():
             self.progressive = False
         return game_difficulty
     
+    # Check the users guess if it is/isnt in the word
+    def guess(self, button, word, progress, progresslabel, pagehandler, endpage):
+        guess = button.cget('text')
+        word = word.upper()
+    
     # Start round of game
     def start_round(self, difficulty, ph, window):
         self.progress = []

@@ -81,6 +81,7 @@ class Game():
             self.progressive = False
         return game_difficulty
 
+    # Check if a users guess is correct or incorrect
     def guess(self, button, word, progress, progresslabel, pagehandler, endpage):
         guess = button.cget('text')
         word = word.upper()
@@ -94,12 +95,14 @@ class Game():
                 # Update the word
                 progresslabel.configure(text=" ".join(progress))
                 button.place_forget()
+                # Check if user has guessed the full word
                 if(word == "".join(progress)):
                     pagehandler.setPage(endpage)
                     endpage.components[1][0].configure(text="You Win!")
                 return
         self.attempts -= 1
         button.place_forget()
+        # Check if user has run out of attempts
         if(self.attempts == 0):
             endpage.components[1][0].configure(text="You Lose!")
             pagehandler.setPage(endpage)

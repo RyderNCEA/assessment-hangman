@@ -18,7 +18,7 @@ center_anchor = [int(WINDOW_DIMENSIONS[0])/2 , int(WINDOW_DIMENSIONS[0])/2]
 class Page():
     def __init__(self, window):
         self.components = []
-        self.frame = Frame(window, width=WINDOW_DIMENSIONS[0], height=WINDOW_DIMENSIONS[1], bg="#F9EBD1")
+        self.frame = Frame(window, width=WINDOW_DIMENSIONS[0], height=WINDOW_DIMENSIONS[1], bg=beige)
 
     # Add components to page
     def add_component(self, object, xpos, ypos, anchor, width=None, height=None, command=None):
@@ -50,23 +50,27 @@ class PageHandler():
             object.place(x=component[1], y=component[2], anchor=component[3], width=component[4], height=component[5])
         self.current = page
         page.frame.pack()
-
+    
 class Game():
-    def __init__(self):
+    def __init__(self, window):
         self.word = []
+        self.progress = []
+        self.window = window
         self.attempts = 6
+        self.difficulty = 4
+        self.progressive = False
 
     # Get a random word from word list text file based on its length
-    def randomWord(word_length):
+    def randomWord(self, word_length):
         with open("word_list.txt", "r") as words:
             dictionary = []
             lines = words.readlines()
             for line in lines:
                 dictionary.append(line.replace("\n", ""))
         self.word = random.choice(dictionary)
-        while len(word) != word_length:
-            word = random.choice(dictionary)
-            
+        while len(self.word) != word_length:
+            self.word = random.choice(dictionary)
+
     # Set the difficulty of the game 
     def set_difficulty(self, difficulty):
         if type(difficulty) == str and "Progressive" == difficulty:
@@ -76,8 +80,7 @@ class Game():
             game_difficulty = difficulty
             self.progressive = False
         return game_difficulty
-    
-    # Check the users guess if it is/isnt in the word
+
     def guess(self, button, word, progress, progresslabel, pagehandler, endpage):
         guess = button.cget('text')
         word = word.upper()
@@ -101,7 +104,7 @@ class Game():
             endpage.components[1][0].configure(text="You Lose!")
             pagehandler.setPage(endpage)
         return
-        
+
     # Start round of game
     def start_round(self, difficulty, ph, window):
         self.progress = []
@@ -155,7 +158,7 @@ window = Tk()
 window.title("Hangman Game")
 window.geometry('x'.join(WINDOW_DIMENSIONS))
 window.configure(bg=beige)
-game = Game()
+game = Game(window)
 
 # Create Pages for Game
 home = Page(window)

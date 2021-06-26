@@ -79,7 +79,7 @@ class Game():
     
     # Check the users guess if it is/isnt in the word
     def guess(self, button, word, progress, progresslabel, pagehandler, endpage):
-        guess = button.get('text')
+        guess = button.cget('text')
         word = word.upper()
         for letter in word:
             if guess == letter:

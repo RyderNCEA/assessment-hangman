@@ -1,6 +1,14 @@
 from tkinter import *
 from tkmacosx import Button
+import os
 import random
+
+
+# System Adjustments
+if os.name is "nt":
+    font_reduction = 0.75
+else:
+    font_reduction = 1
 
 # COLOURS
 darkgrey = '#2B2C2C'
@@ -8,7 +16,7 @@ beige = '#F9EBD1'
 orange = '#FBBC52'
 
 # Button Values
-letters = "abcdefghijklmnopqrstuvwxyz"
+letters = "qwertyuiopasdfghjklzxcvbnm"
 
 # Window Dimensions
 WINDOW_DIMENSIONS = ['805','480']
@@ -122,9 +130,9 @@ class Game():
         # End Page
         endpage = Page(window)
         endpage_frame = endpage.frame
-        title = Label(endpage_frame, fg=darkgrey, bg=beige, text="Hangman", font=("Arial", 60))
+        title = Label(endpage_frame, fg=darkgrey, bg=beige, text="Hangman", font=("Arial", 60*font_reduction))
         endpage.add_component(title, center_anchor[0], 90, "center")
-        subtitle = Label(endpage_frame, bg=orange, fg=darkgrey, text="You {}!", font=("Arial", 40))
+        subtitle = Label(endpage_frame, bg=orange, fg=darkgrey, text="You {}!", font=("Arial", 40*font_reduction))
         endpage.add_component(subtitle, center_anchor[0], 160, "center")
         play_button = Button(endpage_frame, font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
         exit_button = Button(endpage_frame, text="Menu", font=("Arial", 20), command=lambda window=window: ph.setPage(home), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
@@ -144,22 +152,23 @@ class Game():
         graphic_canvas = Label(roundpage_frame, image=self.graphic, bg=beige)
         roundpage.add_component(graphic_canvas, 140, 30, None, width=120,height=156)
         for i in range(len(self.word)): self.progress.append("_")
-        word_display = Label(roundpage_frame, fg=darkgrey, bg=beige, text=" ".join(self.progress), font=("Arial", 50))
+        word_display = Label(roundpage_frame, fg=darkgrey, bg=beige, text=" ".join(self.progress), font=("Arial", 50*font_reduction))
         roundpage.add_component(word_display, center_anchor[0]+100, 90, "center")
         quit_button = Button(roundpage_frame, text="Exit", font=("Arial", 15), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
         roundpage.add_component(quit_button, 60, 40, "center", 80, 40, command=lambda : pagehandler.setPage(home))
         xpos = 25
         ypos = 220
         for l in letters:
-            if l == "j" or l == "s":
+            if l == "p" or l == "l":
                 ypos += 85
-                if l == "s":
+                if l == "l":
                     xpos = 68
                 else:
                     xpos = 25
-            letter_button = Button(roundpage_frame, text=l.upper(), font=("Arial", 20), focuscolor='#ffd285', activebackground="#ffd894",bg=orange, fg=darkgrey)
+            letter_button = Button(roundpage_frame, text=l.upper(), font=("Arial", 20*font_reduction), focuscolor='#ffd285', activebackground="#ffd894",bg=orange, fg=darkgrey)
             roundpage.add_component(letter_button, xpos, ypos, None, width=70, height=70, command=lambda object=letter_button: self.guess(object,self.word,self.progress,word_display, graphic_canvas, ph, endpage))
             xpos += 85
+        print(self.word)
         ph.setPage(roundpage)
         
 
@@ -167,6 +176,8 @@ class Game():
 window = Tk()
 
 window.title("Hangman Game")
+img = PhotoImage(file="images/hangman.png")
+window.iconphoto(True,img)
 window.geometry('x'.join(WINDOW_DIMENSIONS))
 window.configure(bg=beige)
 game = Game(window)
@@ -188,24 +199,24 @@ pageFrames = {
 pagehandler = PageHandler(home)
 
 # Home Page Components
-title = Label(pageFrames['home'], fg=darkgrey, bg=beige, text="Hangman", font=("Arial", 60))
+title = Label(pageFrames['home'], fg=darkgrey, bg=beige, text="Hangman", font=("Arial", 60*font_reduction))
 home.add_component(title, center_anchor[0], 90, "center")
 
-play_button = Button(pageFrames['home'], text="Play", font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
+play_button = Button(pageFrames['home'], text="Play", font=("Arial", 20*font_reduction), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
 play_button.configure(command=lambda window=window: pagehandler.setPage(difficulty))
 home.add_component(play_button, center_anchor[0], 190, "center", 250, 65)
 
-help_button = Button(pageFrames['home'], text="How to Play", font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
+help_button = Button(pageFrames['home'], text="How to Play", font=("Arial", 20*font_reduction), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
 help_button.configure(command=lambda window=window: pagehandler.setPage(help))
 home.add_component(help_button, center_anchor[0], 270, "center", 250, 65)
 
 pagehandler.setPage(home)
 
 # Help Page Components
-title = Label(pageFrames['help'], fg=darkgrey, bg=beige, text="Hangman", font=("Arial", 60))
+title = Label(pageFrames['help'], fg=darkgrey, bg=beige, text="Hangman", font=("Arial", 60*font_reduction))
 help.add_component(title, center_anchor[0], 90, "center")
 
-howtoplay = Label(pageFrames['help'], fg=darkgrey, font=("Arial", 20), 
+howtoplay = Label(pageFrames['help'], fg=darkgrey, font=("Arial", 15), 
     text="""A random word with a specific length is selected.   
 The length of the word will be based on the difficulty  
 you select or the level you are on. If you choose to    
@@ -220,26 +231,26 @@ If you guess a letter in the word that letter will be
     uncovered for you to see and help you solve the word.   """)
 help.add_component(howtoplay, center_anchor[0], 280, "center")
 
-quit_button = Button(pageFrames['help'], text="Exit", font=("Arial", 15), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
+quit_button = Button(pageFrames['help'], text="Exit", font=("Arial", 15*font_reduction), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
 help.add_component(quit_button, 60, 40, "center", 80, 40, command=lambda : pagehandler.setPage(home))
 
 # Difficulty Page Components
-title = Label(pageFrames['difficulty'], fg=darkgrey, bg=beige, text="Hangman", font=("Arial", 60))
+title = Label(pageFrames['difficulty'], fg=darkgrey, bg=beige, text="Hangman", font=("Arial", 60*font_reduction))
 difficulty.add_component(title, center_anchor[0], 90, "center")
 
-subtitle = Label(pageFrames['difficulty'], fg=darkgrey, bg=beige, text="Select your game difficulty:", font=("Arial", 30))
+subtitle = Label(pageFrames['difficulty'], fg=darkgrey, bg=beige, text="Select your game difficulty:", font=("Arial", 30*font_reduction))
 difficulty.add_component(subtitle, center_anchor[0], 160, "center")
 
 temp_x = 85
 temp_y = 190
 # Add all dificulty buttons
 for difficulty_level in range(4,12):
-    play_button = Button(pageFrames['difficulty'], text=str(difficulty_level), font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
+    play_button = Button(pageFrames['difficulty'], text=str(difficulty_level), font=("Arial", 20*font_reduction), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
     difficulty.add_component(play_button, temp_x, temp_y, None, 70, 70,command=lambda d=difficulty_level: game.start_round(game.set_difficulty(d), pagehandler, window))
     temp_x += 80
 
 # Add progressive mode button
-progressive_mode = Button(pageFrames['difficulty'], text="Progressive Mode", font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
+progressive_mode = Button(pageFrames['difficulty'], text="Progressive Mode", font=("Arial", 20*font_reduction), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
 progressive_mode.configure(command=lambda d="Progressive": game.start_round(game.set_difficulty(d), pagehandler, window))
 difficulty.add_component(progressive_mode, center_anchor[0], 320, "center", 190, 55)
 window.mainloop()

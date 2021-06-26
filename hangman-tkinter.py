@@ -57,7 +57,7 @@ class Game():
         self.progress = []
         self.window = window
         self.attempts = 6
-        self.difficulty = 4
+        self.game_difficulty = 4
         self.progressive = False
 
     # Get a random word from word list text file based on its length
@@ -106,25 +106,25 @@ class Game():
         return
 
     # Start round of game
-    def start_round(self, difficulty, ph, window):
+    def start_round(self, mode, ph, window):
         self.progress = []
         self.attempts = 6
-        self.randomWord(difficulty)
+        self.randomWord(mode)
 
         # End Page
         endpage = Page(window)
         endpage_frame = endpage.frame
-        title = Label(endpage_frame, fg="#2B2C2C", bg=beige, text="Hangman", font=("Arial", 60))
+        title = Label(endpage_frame, fg=darkgrey, bg=beige, text="Hangman", font=("Arial", 60))
         endpage.add_component(title, center_anchor[0], 90, "center")
-        subtitle = Label(endpage_frame, bg=orange, fg="#2B2C2C", text="You {}!", font=("Arial", 40))
+        subtitle = Label(endpage_frame, bg=orange, fg=darkgrey, text="You {}!", font=("Arial", 40))
         endpage.add_component(subtitle, center_anchor[0], 160, "center")
         play_button = Button(endpage_frame, font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
-        if self.progressive == True and difficulty != 11:
-            self.difficulty += 1
-            play_button.configure(command=lambda window=window: self.start_round(self.difficulty, ph, window), 
+        if self.progressive == True and mode != 11:
+            self.game_difficulty += 1
+            play_button.configure(command=lambda window=window: self.start_round(self.game_difficulty, ph, window), 
             text="Next Round")
         else:
-            play_button.configure(command=lambda window=window: pagehandler.setPage(home), 
+            play_button.configure(command=lambda window=window: pagehandler.setPage(difficulty), 
             text="Play Again")
         endpage.add_component(play_button, center_anchor[0], 230, "center", 250, 65)
 
@@ -132,7 +132,7 @@ class Game():
         roundpage = Page(window)
         roundpage_frame = roundpage.frame
         for i in range(len(self.word)): self.progress.append("_")
-        word_display = Label(roundpage_frame, fg="#2B2C2C", bg="#F9EBD1", text=" ".join(self.progress), font=("Arial", 50))
+        word_display = Label(roundpage_frame, fg=darkgrey, bg=beige, text=" ".join(self.progress), font=("Arial", 50))
         roundpage.add_component(word_display, center_anchor[0], 90, "center")
         quit_button = Button(roundpage_frame, text="Exit", font=("Arial", 15), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
         roundpage.add_component(quit_button, 60, 40, "center", 80, 40, command=lambda : pagehandler.setPage(home))
@@ -145,7 +145,7 @@ class Game():
                     xpos = 68
                 else:
                     xpos = 25
-            letter_button = Button(roundpage_frame, text=l.upper(), font=("Arial", 20), focuscolor='#ffd285', activebackground="#ffd894",bg="#FBBC52", fg="#2B2C2C")
+            letter_button = Button(roundpage_frame, text=l.upper(), font=("Arial", 20), focuscolor='#ffd285', activebackground="#ffd894",bg=orange, fg=darkgrey)
             roundpage.add_component(letter_button, xpos, ypos, None, width=75, height=75, command=lambda object=letter_button: self.guess(object,self.word,self.progress,word_display, ph, endpage))
             xpos += 85
         print(self.word)
@@ -177,7 +177,7 @@ pageFrames = {
 pagehandler = PageHandler(home)
 
 # Home Page Components
-title = Label(pageFrames['home'], fg="#2B2C2C", bg=beige, text="Hangman", font=("Arial", 60))
+title = Label(pageFrames['home'], fg=darkgrey, bg=beige, text="Hangman", font=("Arial", 60))
 home.add_component(title, center_anchor[0], 90, "center")
 
 play_button = Button(pageFrames['home'], text="Play", font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
@@ -191,10 +191,10 @@ home.add_component(help_button, center_anchor[0], 270, "center", 250, 65)
 pagehandler.setPage(home)
 
 # Help Page Components
-title = Label(pageFrames['help'], fg="#2B2C2C", bg=beige, text="Hangman", font=("Arial", 60))
+title = Label(pageFrames['help'], fg=darkgrey, bg=beige, text="Hangman", font=("Arial", 60))
 help.add_component(title, center_anchor[0], 90, "center")
 
-howtoplay = Label(pageFrames['help'], fg="#2B2C2C", font=("Arial", 20), 
+howtoplay = Label(pageFrames['help'], fg=darkgrey, font=("Arial", 20), 
     text="""A random word with a specific length is selected.   
 The length of the word will be based on the difficulty  
 you select or the level you are on. If you choose to    
@@ -213,10 +213,10 @@ quit_button = Button(pageFrames['help'], text="Exit", font=("Arial", 15), backgr
 help.add_component(quit_button, 60, 40, "center", 80, 40, command=lambda : pagehandler.setPage(home))
 
 # Difficulty Page Components
-title = Label(pageFrames['difficulty'], fg="#2B2C2C", bg=beige, text="Hangman", font=("Arial", 60))
+title = Label(pageFrames['difficulty'], fg=darkgrey, bg=beige, text="Hangman", font=("Arial", 60))
 difficulty.add_component(title, center_anchor[0], 90, "center")
 
-subtitle = Label(pageFrames['difficulty'], fg="#2B2C2C", bg=beige, text="Select your game difficulty:", font=("Arial", 30))
+subtitle = Label(pageFrames['difficulty'], fg=darkgrey, bg=beige, text="Select your game difficulty:", font=("Arial", 30))
 difficulty.add_component(subtitle, center_anchor[0], 160, "center")
 
 temp_x = 85

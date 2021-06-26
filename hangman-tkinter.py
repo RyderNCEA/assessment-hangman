@@ -1,5 +1,5 @@
-import tkinter as tk
 from tkinter import *
+from tkmacosx import Button
 import random
 
 # COLOURS
@@ -68,35 +68,66 @@ class Game():
             word = random.choice(dictionary)
 
 
-window = tk.Tk()
+# Creation of Game
+window = Tk()
 
 window.title("Hangman Game")
 window.geometry('x'.join(WINDOW_DIMENSIONS))
-window.configure(bg="#F9EBD1")
+window.configure(bg=beige)
+game = Game(window)
 
-game = Game()
+# Create Pages for Game
 home = Page(window)
 help = Page(window)
+difficulty = Page(window)
 
+pages = [home, help, difficulty]
+
+pageFrames = {
+  "home": home.frame,
+  "help": help.frame,
+  "difficulty": difficulty.frame
+}
+
+# Create Page Handler for Game with starting window "home"
 pagehandler = PageHandler(home)
-frame = pagehandler.getPage()
-
-# Universal Components
-title = Label(frame, fg="#2B2C2C", bg="#F9EBD1", text="Hangman", font=("Arial", 60))
 
 # Home Page Components
-play_button = Button(frame, text="Play", font=("Arial", 20), highlightbackground="#FBBC52", fg="#2B2C2C", highlightthickness=60, width=230, height=50)
-#play_button.configure(command=lambda window=window: pageManager(window, "difficulty"))
+title = Label(pageFrames['home'], fg="#2B2C2C", bg=beige, text="Hangman", font=("Arial", 60))
+home.add_component(title, center_anchor[0], 90, "center")
 
-help_button = Button(frame, text="How to Play", font=("Arial", 20), highlightbackground="#FBBC52", fg="#2B2C2C", highlightthickness=60)
+play_button = Button(pageFrames['home'], text="Play", font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
+play_button.configure(command=lambda window=window: pagehandler.setPage(difficulty))
+home.add_component(play_button, center_anchor[0], 190, "center", 250, 65)
+
+help_button = Button(pageFrames['home'], text="How to Play", font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
 help_button.configure(command=lambda window=window: pagehandler.setPage(help))
+home.add_component(help_button, center_anchor[0], 270, "center", 250, 65)
 
-home.add_component(title, center_anchor[0], 80, "center", None, None)
-home.add_component(help_button, center_anchor[0], 240, "center", 230, 50)
-home.add_component(play_button, center_anchor[0], 170, "center", 230, 50)
 pagehandler.setPage(home)
 
-help.add_component(title, center_anchor[0], 80, "center", None, None)
+# Help Page Components
+title = Label(pageFrames['help'], fg="#2B2C2C", bg=beige, text="Hangman", font=("Arial", 60))
+help.add_component(title, center_anchor[0], 90, "center")
+
+howtoplay = Label(pageFrames['help'], fg="#2B2C2C", font=("Arial", 20), 
+    text="""A random word with a specific length is selected.   
+The length of the word will be based on the difficulty  
+you select or the level you are on. If you choose to    
+play the progressive mode each round of hangman 
+gets progressively harder.  
+
+If you have 6 incorret guesses you lose! With each  
+wrong guess the hangman graphic will move closer to 
+completion.
+
+If you guess a letter in the word that letter will be   
+    uncovered for you to see and help you solve the word.   """)
+help.add_component(howtoplay, center_anchor[0], 280, "center")
+
+quit_button = Button(pageFrames['help'], text="Exit", font=("Arial", 15), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
+help.add_component(quit_button, 60, 40, "center", 80, 40, command=lambda : pagehandler.setPage(home))
+
 
 
 window.mainloop()

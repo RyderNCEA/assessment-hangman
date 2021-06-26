@@ -1,5 +1,6 @@
 from tkinter import *
 from tkmacosx import Button
+from PIL import Image, ImageTk
 import random
 
 # COLOURS
@@ -59,7 +60,7 @@ class Game():
         self.attempts = 6
         self.game_difficulty = 4
         self.progressive = False
-
+        self.graphic = PhotoImage(file="images/graphic7.png")
     # Get a random word from word list text file based on its length
     def randomWord(self, word_length):
         with open("word_list.txt", "r") as words:
@@ -82,7 +83,7 @@ class Game():
         return game_difficulty
 
     # Check if a users guess is correct or incorrect
-    def guess(self, button, word, progress, progresslabel, pagehandler, endpage):
+    def guess(self, button, word, progress, progresslabel, graphic, pagehandler, endpage):
         guess = button.cget('text')
         word = word.upper()
         for letter in word:
@@ -105,13 +106,18 @@ class Game():
         # Check if user has run out of attempts
         if(self.attempts == 0):
             endpage.components[1][0].configure(text="You Lose!")
+            self.graphic = PhotoImage(file="images/graphic7.png")
+            graphic.configure(image=self.graphic)
             pagehandler.setPage(endpage)
+        self.graphic = PhotoImage(file="images/graphic{}.png".format(str(self.attempts+1)))
+        graphic.configure(image=self.graphic)
         return
 
     # Start round of game
     def start_round(self, mode, ph, window):
         self.progress = []
         self.attempts = 6
+        self.graphic = PhotoImage(file="images/graphic7.png")
         self.randomWord(mode)
 
         # End Page
@@ -134,13 +140,15 @@ class Game():
         # Game Page
         roundpage = Page(window)
         roundpage_frame = roundpage.frame
+        graphic_canvas = Label(roundpage_frame, image=self.graphic, bg=beige)
+        roundpage.add_component(graphic_canvas, 140, 30, None, width=120,height=156)
         for i in range(len(self.word)): self.progress.append("_")
         word_display = Label(roundpage_frame, fg=darkgrey, bg=beige, text=" ".join(self.progress), font=("Arial", 50))
-        roundpage.add_component(word_display, center_anchor[0], 90, "center")
+        roundpage.add_component(word_display, center_anchor[0]+100, 90, "center")
         quit_button = Button(roundpage_frame, text="Exit", font=("Arial", 15), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
         roundpage.add_component(quit_button, 60, 40, "center", 80, 40, command=lambda : pagehandler.setPage(home))
         xpos = 25
-        ypos = 195
+        ypos = 220
         for l in letters:
             if l == "j" or l == "s":
                 ypos += 85
@@ -149,7 +157,7 @@ class Game():
                 else:
                     xpos = 25
             letter_button = Button(roundpage_frame, text=l.upper(), font=("Arial", 20), focuscolor='#ffd285', activebackground="#ffd894",bg=orange, fg=darkgrey)
-            roundpage.add_component(letter_button, xpos, ypos, None, width=75, height=75, command=lambda object=letter_button: self.guess(object,self.word,self.progress,word_display, ph, endpage))
+            roundpage.add_component(letter_button, xpos, ypos, None, width=70, height=70, command=lambda object=letter_button: self.guess(object,self.word,self.progress,word_display, graphic_canvas, ph, endpage))
             xpos += 85
         print(self.word)
         ph.setPage(roundpage)

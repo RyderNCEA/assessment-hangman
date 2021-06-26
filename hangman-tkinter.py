@@ -2,6 +2,18 @@ import tkinter as tk
 from tkinter import *
 import random
 
+# COLOURS
+darkgrey = '#2B2C2C'
+beige = '#F9EBD1'
+orange = '#FBBC52'
+
+# Button Values
+letters = "abcdefghijklmnopqrstuvwxyz"
+
+# Window Dimensions
+WINDOW_DIMENSIONS = ['805','480']
+center_anchor = [int(WINDOW_DIMENSIONS[0])/2 , int(WINDOW_DIMENSIONS[0])/2]
+
 # Page Object
 class Page():
     def __init__(self, window):
@@ -39,8 +51,6 @@ class PageHandler():
         self.current = page
         page.frame.pack()
 
-WINDOW_DIMENSIONS = ['805','480']
-center_anchor = [int(WINDOW_DIMENSIONS[0])/2 , int(WINDOW_DIMENSIONS[0])/2]
 class Game():
     def __init__(self):
         self.word = []

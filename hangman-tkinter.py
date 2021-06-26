@@ -91,6 +91,16 @@ class Game():
                 # Update the word
                 progresslabel.configure(text=" ".join(progress))
                 button.place_forget()
+                if(word == "".join(progress)):
+                    pagehandler.setPage(endpage)
+                    endpage.components[1][0].configure(text="You Win!")
+                return
+        self.attempts -= 1
+        button.place_forget()
+        if(self.attempts == 0):
+            endpage.components[1][0].configure(text="You Lose!")
+            pagehandler.setPage(endpage)
+        return
         
     # Start round of game
     def start_round(self, difficulty, ph, window):

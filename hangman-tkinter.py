@@ -1,6 +1,5 @@
 from tkinter import *
 from tkmacosx import Button
-from PIL import Image, ImageTk
 import random
 
 # COLOURS
@@ -161,7 +160,6 @@ class Game():
             letter_button = Button(roundpage_frame, text=l.upper(), font=("Arial", 20), focuscolor='#ffd285', activebackground="#ffd894",bg=orange, fg=darkgrey)
             roundpage.add_component(letter_button, xpos, ypos, None, width=70, height=70, command=lambda object=letter_button: self.guess(object,self.word,self.progress,word_display, graphic_canvas, ph, endpage))
             xpos += 85
-        print(self.word)
         ph.setPage(roundpage)
         
 

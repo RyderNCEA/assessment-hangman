@@ -1,5 +1,6 @@
 from tkinter import *
 from tkmacosx import Button
+from PIL import Image, ImageTk
 import random
 
 # COLOURS
@@ -127,6 +128,7 @@ class Game():
         subtitle = Label(endpage_frame, bg=orange, fg=darkgrey, text="You {}!", font=("Arial", 40))
         endpage.add_component(subtitle, center_anchor[0], 160, "center")
         play_button = Button(endpage_frame, font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
+        exit_button = Button(endpage_frame, text="Menu", font=("Arial", 20), command=lambda window=window: ph.setPage(home), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
         if self.progressive == True and mode != 11:
             self.game_difficulty += 1
             play_button.configure(command=lambda window=window: self.start_round(self.game_difficulty, ph, window), 
@@ -135,6 +137,7 @@ class Game():
             play_button.configure(command=lambda window=window: pagehandler.setPage(difficulty), 
             text="Play Again")
         endpage.add_component(play_button, center_anchor[0], 230, "center", 250, 65)
+        endpage.add_component(exit_button, center_anchor[0], 300, "center", 250, 65)
 
         # Game Page
         roundpage = Page(window)

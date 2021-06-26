@@ -15,8 +15,8 @@ class Page():
 
 # Game Page Manager
 class PageHandler():
-    def __init__(self, home):
-        self.current = home
+    def __init__(self, open):
+        self.current = open
     
     # Get the games current page frame
     def getPage(self):
@@ -24,12 +24,20 @@ class PageHandler():
 
     # Change the games page
     def setPage(self, page):
+
+        # Remove current page
+        self.current.frame.pack_forget()
+            
         # Place all components in desired page
         for component in page.components:
-            self.current = page
             object = component[0]
+            try:
+                object.configure(command=component[6])
+            except:
+                pass
             object.place(x=component[1], y=component[2], anchor=component[3], width=component[4], height=component[5])
-            self.current.frame.place(x=0,y=0)
+        self.current = page
+        page.frame.pack()
 
 WINDOW_DIMENSIONS = ['805','480']
 center_anchor = [int(WINDOW_DIMENSIONS[0])/2 , int(WINDOW_DIMENSIONS[0])/2]

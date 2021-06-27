@@ -216,7 +216,7 @@ pagehandler.setPage(home)
 title = Label(pageFrames['help'], fg=darkgrey, bg=beige, text="Hangman", font=("Arial", int(60*font_reduction)))
 help.add_component(title, center_anchor[0], 90, "center")
 
-howtoplay = Label(pageFrames['help'], fg=darkgrey, font=("Arial", 15), 
+howtoplay = Label(pageFrames['help'], fg=darkgrey, font=("Arial", int(20*font_reduction)), 
     text="""A random word with a specific length is selected.   
 The length of the word will be based on the difficulty  
 you select or the level you are on. If you choose to    

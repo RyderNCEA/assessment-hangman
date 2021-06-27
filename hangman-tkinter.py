@@ -29,7 +29,7 @@ class Page():
         self.frame = Frame(window, width=WINDOW_DIMENSIONS[0], height=WINDOW_DIMENSIONS[1], bg=beige)
 
     # Add components to page
-    def add_component(self, object, xpos, ypos, anchor, width=None, height=None, command=None):
+    def add_component(self, object, xpos, ypos, anchor=None, width=None, height=None, command=None):
         self.components.append([object,xpos,ypos, anchor, width, height, command])
         return
 
@@ -68,6 +68,7 @@ class Game():
         self.game_difficulty = 4
         self.progressive = False
         self.graphic = PhotoImage(file="images/graphic7.png")
+
     # Get a random word from word list text file based on its length
     def randomWord(self, word_length):
         with open("word_list.txt", "r") as words:
@@ -83,11 +84,11 @@ class Game():
     def set_difficulty(self, difficulty):
         if type(difficulty) == str and "Progressive" == difficulty:
             self.progressive = True
-            game_difficulty = 4
+            self.game_difficulty = 4
         else:
-            game_difficulty = difficulty
+            self.game_difficulty = difficulty
             self.progressive = False
-        return game_difficulty
+        return self.game_difficulty
 
     # Check if a users guess is correct or incorrect
     def guess(self, button, word, progress, progresslabel, graphic, pagehandler, endpage):
@@ -133,7 +134,7 @@ class Game():
         title = Label(endpage_frame, fg=darkgrey, bg=beige, text="Hangman", font=("Arial", int(60*font_reduction)))
         endpage.add_component(title, center_anchor[0], 90, "center")
         subtitle = Label(endpage_frame, bg=orange, fg=darkgrey, text="You {}!", font=("Arial", int(60*font_reduction)))
-        endpage.add_component(subtitle, center_anchor[0], 160, "center")
+        endpage.add_component(subtitle, center_anchor[0], 170, "center")
         play_button = Button(endpage_frame, font=("Arial", 20), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
         exit_button = Button(endpage_frame, text="Menu", font=("Arial", 20), command=lambda window=window: ph.setPage(home), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
         if self.progressive == True and mode != 11:
@@ -143,8 +144,8 @@ class Game():
         else:
             play_button.configure(command=lambda window=window: pagehandler.setPage(difficulty), 
             text="Play Again")
-        endpage.add_component(play_button, center_anchor[0], 230, "center", 250, 65)
-        endpage.add_component(exit_button, center_anchor[0], 300, "center", 250, 65)
+        endpage.add_component(play_button, center_anchor[0], 260, "center", 250, 65)
+        endpage.add_component(exit_button, center_anchor[0], 340, "center", 250, 65)
 
         # Game Page
         roundpage = Page(window)
@@ -152,7 +153,7 @@ class Game():
         graphic_canvas = Label(roundpage_frame, image=self.graphic, bg=beige)
         roundpage.add_component(graphic_canvas, 140, 30, None, width=120,height=156)
         for i in range(len(self.word)): self.progress.append("_")
-        word_display = Label(roundpage_frame, fg=darkgrey, bg=beige, text=" ".join(self.progress), font=("Arial", int(50*font_reduction)))
+        word_display = Label(roundpage_frame, fg=darkgrey, bg=beige, text=" ".join(self.progress), font=("Arial", int(45*font_reduction)))
         roundpage.add_component(word_display, center_anchor[0]+100, 90, "center")
         quit_button = Button(roundpage_frame, text="Exit", font=("Arial", 15), background=orange, fg=darkgrey, borderless=1, activebackground='#ffd285', focuscolor='#ffd285')
         roundpage.add_component(quit_button, 60, 40, "center", 80, 40, command=lambda : pagehandler.setPage(home))
@@ -168,7 +169,9 @@ class Game():
             letter_button = Button(roundpage_frame, text=l.upper(), font=("Arial", int(20*font_reduction)), focuscolor='#ffd285', activebackground="#ffd894",bg=orange, fg=darkgrey)
             roundpage.add_component(letter_button, xpos, ypos, None, width=70, height=70, command=lambda object=letter_button: self.guess(object,self.word,self.progress,word_display, graphic_canvas, ph, endpage))
             xpos += 85
-        print(self.word)
+        if self.progressive == True:
+            round_indicator = Label(roundpage_frame, fg=darkgrey, bg=orange, font=("Arial", int(15*font_reduction)), text="Round {}".format(str(self.game_difficulty-4)))
+            roundpage.add_component(round_indicator, 370, 20)
         ph.setPage(roundpage)
         
 
